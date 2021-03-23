@@ -64,6 +64,14 @@
                                 @endif
                             </div>
                         </div>
+                        <hr>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <a href="{{ url('auth/google') }}">
+                                    <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" style="margin-left: 3em;">
+                                </a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
