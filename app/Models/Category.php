@@ -21,4 +21,8 @@ class Category extends Model
     {
         return $this->hasMany(Category::class);
     }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }
