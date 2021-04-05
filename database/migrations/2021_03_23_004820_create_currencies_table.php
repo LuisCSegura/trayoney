@@ -16,13 +16,17 @@ class CreateCurrenciesTable extends Migration
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('base_currency_user_id')->nullable()->unsigned();
             $table->string('abbreviation');
             $table->char('simbol', 1);
             $table->string('name');
             $table->float('rate');
-            $table->boolean('is_base_currency');
             $table->timestamps();
             $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('base_currency_user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

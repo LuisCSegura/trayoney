@@ -31,7 +31,7 @@ class TransactionFactory extends Factory
             'destination_account_id' => NULL,
             'detail' => $this->faker->sentence,
             'amount' => $this->faker->randomFloat(NULL, $min = 1, $max = 10000000),
-            'type' => $this->faker->randomElement(['income', 'expenses', 'transfer']),
+            'type' => $this->faker->randomElement(['income', 'expense', 'transfer']),
         ];
     }
 }

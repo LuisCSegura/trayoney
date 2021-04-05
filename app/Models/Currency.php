@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Currency extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'abbreviation', 'name', 'simbol', 'rate', 'is_base_currency'];
+    protected $fillable = ['user_id', 'abbreviation', 'name', 'simbol', 'rate'];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -16,5 +16,9 @@ class Currency extends Model
     public function accounts()
     {
         return $this->hasMany(Account::class);
+    }
+    public function base_currency_user()
+    {
+        return $this->belongsTo(User::class, 'base_currency_user_id', 'id');
     }
 }

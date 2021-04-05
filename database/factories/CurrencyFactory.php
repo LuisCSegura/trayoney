@@ -28,7 +28,6 @@ class CurrencyFactory extends Factory
             'name' => $this->faker->word,
             'simbol' => $this->faker->randomElement(array('€', '₡', '$')),
             'rate' => $this->faker->randomFloat(NULL, $min = 1, $max = 1000),
-            'is_base_currency' => false,
         ];
     }
 }
