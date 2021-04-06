@@ -7,7 +7,7 @@
 <div class="nav-content">
   <div class="sidebar-container">
     <div class="sidebar-logo">
-      NAVIGATION
+      Track Your Money
     </div>
     <ul class="sidebar-navigation">
       <li class="header">Records</li>

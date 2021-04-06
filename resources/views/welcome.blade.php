@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Track Your Money</title>
+        <title>TRAYONEY</title>
 
         <!-- Fonts -->
 
@@ -16,36 +16,84 @@
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
             body {
+                background-image: url({{asset('images/wp.jpg')}});
+                background-repeat: no-repeat;
+                background-size: 100%;
+                background-attachment: fixed;
                 font-family: 'Josefin Sans', sans-serif;
-                background-color: #282C34;
-                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
             }
             .logo-container{
-                text-align: center;
+                background-color: transparent;
+                width: 100%;
+                color: rgba(255, 255, 255, 0.8);
+                margin: auto;
+                padding: 20px;
+                padding-left: 100px;
+                text-align: left;
             }
+            h1{
+                width: 100%;
+                color: #fff;
+                font-size: 70px;
+                margin: 0px;
+                padding: 0px
+            }
+            .btn-main{
+            padding:15px 20px 15px 20px;
+            border:none;
+            background-color: #4B0082;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        }
+        .btn-main:hover{
+            text-decoration: none;
+            color: #fff;
+            background-color: #5B1092;
+        }
+        .login{
+            padding: 10px 20px 10px 20px;
+            margin-right: 10px;
+            background-color: #008CD4;
+        }
+        .login:hover{
+            background-color: #009Ce4;
+        }
+        .register{
+            padding: 10px 20px 10px 20px;
+            margin-right: 10px;
+            background-color: darkorange;
+        }
+        .register:hover{
+            background-color: #eF7C00;
+        }
         </style>
     </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen sm:items-center sm:pt-0">
+    <body>
+        <div class="logo-container">
+            <h1>Welcome to TRAYONEY.com</h1>
+            <h3>Manage your money, your income, expenses and accounts</h3>
+            <h2>Manage your goals TRACK YOUR MONEY!</h2>
+
             @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                <div class="buttons">
                     @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">HOME</a>
+                        <a href="{{ url('/home') }}" class="btn-main login">HOME</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">LOGIN</a>
+                        <a href="{{ route('login') }}" class="btn-main login">LOGIN</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">REGISTER</a>
+                            <a href="{{ route('register') }}" class="btn-main register">REGISTER</a>
                         @endif
                     @endauth
                 </div>
             @endif
-
-            <div class="">
-                <div class="logo-container">
-                    <h1 style="color: #a0aec0; font-size: 70px; margin: none; padding: none;">TRACK YOUR MONEY</h1>
-                </div>
-            </div>
         </div>
     </body>
 </html>
