@@ -1,21 +1,25 @@
 @extends('layouts.app')
-
+@section('styles')
+<link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
+@yield('stylesfluid')
+@endsection
 @section('content')
-<div class="sidebar-container">
+<div class="nav-content">
+  <div class="sidebar-container">
     <div class="sidebar-logo">
       NAVIGATION
     </div>
     <ul class="sidebar-navigation">
       <li class="header">Records</li>
       <li>
-        <a href="#">
+        <a href="/home">
           <i class="fa" aria-hidden="true"></i>
           <img class="menu-icon" src="{{asset("images/DashboardIcon.png")}}" alt="">
             DASHBOARD
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href="/transactions">
           <i class="fa" aria-hidden="true"></i>
           <img class="menu-icon" src="{{asset("images/TransactionsIcon.png")}}" alt="">
            TRANSACTIONS
@@ -23,7 +27,7 @@
       </li>
       <li class="header">base Information</li>
       <li>
-        <a href="#">
+        <a href="/currencies">
           
           <i class="fa" aria-hidden="true"></i>
           <img class="menu-icon" src="{{asset("images/CurrenciesIcon.png")}}" alt="">
@@ -31,14 +35,14 @@
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href="/accounts">
           <i class="fa" aria-hidden="true"></i>
           <img class="menu-icon" src="{{asset("images/AccountsIcon.png")}}" alt="">
            ACCOUNTS
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href="/categories">
           <i class="fa" aria-hidden="true"></i>
           <img class="menu-icon" src="{{asset("images/CategoriesIcon.png")}}" alt="">
            CATEGORIES
@@ -46,6 +50,7 @@
       </li>
     </ul>
   </div>
-  
   @yield('fluid')
+</div>
+
 @endsection
