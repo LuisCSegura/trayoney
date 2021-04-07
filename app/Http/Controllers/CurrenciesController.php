@@ -46,7 +46,11 @@ class CurrenciesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validateCurrency();
+        $currency = new Currency(request(['base_currency_user_id', 'abbreviation', 'name', 'simbol', 'rate']));
+        $currency->user_id = Auth::user()->id;
+        $currency->save();
+        return redirect('/currencies');
     }
 
     /**
@@ -80,7 +84,8 @@ class CurrenciesController extends Controller
      */
     public function update(Request $request, Currency $currency)
     {
-        //
+        $currency->update($this->validateCurrency());
+        return redirect('/currencies');
     }
 
     /**
@@ -89,8 +94,19 @@ class CurrenciesController extends Controller
      * @param  \App\Models\Currency  $currency
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Currency $currency)
+    public function destroy($id)
     {
-        //
+        $currency = Currency::findOrFail($id);
+        $currency->delete();
+        return redirect('/currencies');
+    }
+    protected function validateCurrency()
+    {
+        return request()->validate([
+            'abbreviation' => 'required',
+            'name' => 'required',
+            'simbol' => 'required',
+            'rate' => 'required'
+        ]);
     }
 }

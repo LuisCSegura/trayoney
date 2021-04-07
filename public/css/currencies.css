@@ -47,6 +47,7 @@ hr{
     display: flex;
 }
 .btn-main{
+    height: 38px;
     padding:5px 20px 5px 20px;
     border:none;
     background-color: #4B0082;
@@ -88,4 +89,40 @@ hr{
 }
 .delete:hover{
     background-color: #cC042C;
+}
+.exe{
+    width: 96%;
+    margin: 10px;
+}
+.card{
+    margin-top: 30%;
+    text-align: left;
+    backdrop-filter: blur(20px);
+    background-color: rgba(145, 185, 255, 0.1);
+    color: rgba(205, 225, 255, 0.4);
+    border-radius: 10px;
+    border: solid 2px rgba(185, 205, 255, 0.2);
+    padding: 10px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
+}
+.form-title{
+    margin: 0px 10px 20px 10px;
+    font-size: 30px;
+    width: auto;
+    color: rgba(205, 225, 255, 0.4);
+    border-bottom:solid 3px rgba(145, 185, 255, 0.2);
+}
+.input-trn{
+    background-color:  rgba(145, 185, 255, 0.2);
+    color: white;
+    border-radius: 50px;
+    border: none;
+    margin: 0px;
+}
+.input-trn:focus{
+    background-color:  rgba(145, 185, 255, 0.1);
+    color: white;
+    border-radius: 50px;
+    border: none;
+    box-shadow: none;
 }

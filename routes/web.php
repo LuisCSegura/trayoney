@@ -24,5 +24,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //google auth
 Route::get('auth/google', [App\Http\Controllers\GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [App\Http\Controllers\GoogleController::class, 'handleGoogleCallback']);
-//cruds
+//currencies
 Route::get('/currencies', [App\Http\Controllers\CurrenciesController::class, 'index']);
+Route::post('/currencies', [App\Http\Controllers\CurrenciesController::class, 'store']);
+Route::put('/currencies/{currency}', [App\Http\Controllers\CurrenciesController::class, 'update'])->name('currencies.update');
+Route::delete('/currencies/{currency}', [App\Http\Controllers\CurrenciesController::class, 'destroy'])->name('currencies.destroy');
