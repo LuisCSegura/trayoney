@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Currency;
+use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CurrenciesController extends Controller
+
+class AccountsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,10 +25,9 @@ class CurrenciesController extends Controller
      */
     public function index()
     {
-        $currencies = Currency::where('user_id', Auth::user()->id)->latest()->get();
-        return view('currencies.index', ['currencies' => $currencies]);
+        $accounts = Account::where('user_id', Auth::user()->id)->latest()->get();
+        return view('accounts.index', ['accounts' => $accounts]);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -37,45 +37,46 @@ class CurrenciesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateCurrency();
-        $currency = new Currency(request(['base_currency_user_id', 'abbreviation', 'name', 'simbol', 'rate']));
-        $currency->user_id = Auth::user()->id;
-        $currency->save();
-        return redirect('/currencies');
+        $this->validateAccount();
+        $account = new Account(request(['currency_id', 'abbreviation', 'name', 'balance', 'is_debit']));
+        $account->user_id = Auth::user()->id;
+        $account->save();
+        return redirect('/accounts');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Currency  $currency
+     * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Currency $currency)
+    public function update(Request $request, Account $account)
     {
-        $currency->update($this->validateCurrency());
-        return redirect('/currencies');
+        $account->update($this->validateAccount());
+        return redirect('/accounts');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Currency  $currency
+     * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $currency = Currency::findOrFail($id);
-        $currency->delete();
-        return redirect('/currencies');
+        $account = Account::findOrFail($id);
+        $account->delete();
+        return redirect('/accounts');
     }
-    protected function validateCurrency()
+    protected function validateAccount()
     {
         return request()->validate([
+            'currency_id' => 'required',
             'abbreviation' => 'required',
             'name' => 'required',
-            'simbol' => 'required',
-            'rate' => 'required'
+            'is_debit' => 'required',
+            'balance' => 'required'
         ]);
     }
 }

@@ -1,0 +1,143 @@
+.container-fluid{
+    padding-bottom: 100px;
+}
+h1{
+    margin: 20px;
+    font-size: 50px;
+    width: auto;
+    color: #7B50b2;
+    border-bottom:solid 3px rgba(145, 185, 255, 0.1);
+}
+.content-section{
+    border-radius: 10px;
+    padding: 20px;
+    background-color:rgba(145, 185, 255, 0.07) ;
+    margin: 20px;
+}
+.index-table{
+    width: 100%;
+    text-align: center;
+}
+.item-row{
+    margin: 20px;
+}
+.item-cell{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #21252B;
+    padding: 15px;
+    border-right: solid 2px #2F3642;
+}
+tr .first{
+    border-radius: 10px 0px 0px 10px;
+}
+
+tr .last{
+    width: 20%;
+    border-radius: 0px 10px 10px 0px;
+}
+.spacer{
+    background: none;
+    height: 10px;
+}
+hr{
+    background-color: #21252B;
+}
+.content-section-header{
+    display: flex;
+}
+.btn-main{
+    height: 38px;
+    padding:5px 20px 5px 20px;
+    border:none;
+    background-color: #4B0082;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+.btn-main:hover{
+    background-color: #5B1092;
+}
+.create{
+    height: 38px;
+    margin-left: 20px;
+    background-color: #0DaC70;
+}
+.create:hover{
+    background-color: #1DbC80;
+}
+.update{
+    height: 30px;
+    margin: 0px;
+    padding: 0px 5px 0px 5px;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: darkorange;
+}
+.update:hover{
+    background-color: #ef7C00;
+}
+.delete{
+    height: 30px;
+    margin-left: 10px;
+    padding: 0px 5px 0px 5px;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: crimson;
+}
+.delete:hover{
+    background-color: #cC042C;
+}
+.exe{
+    width: 96%;
+    margin: 10px;
+}
+.card{
+    margin-top: 30%;
+    text-align: left;
+    backdrop-filter: blur(20px);
+    background-color: rgba(145, 185, 255, 0.1);
+    color: rgba(205, 225, 255, 0.4);
+    border-radius: 10px;
+    border: solid 2px rgba(185, 205, 255, 0.2);
+    padding: 10px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
+}
+.form-title{
+    margin: 0px 10px 20px 10px;
+    font-size: 30px;
+    width: auto;
+    color: rgba(205, 225, 255, 0.4);
+    border-bottom:solid 3px rgba(145, 185, 255, 0.2);
+}
+.input-trn{
+    background-color:  rgba(145, 185, 255, 0.2);
+    color: white;
+    border-radius: 50px;
+    border: none;
+    margin: 0px;
+}
+.input-trn:focus{
+    background-color:  rgba(145, 185, 255, 0.1);
+    color: white;
+    border-radius: 50px;
+    border: none;
+    box-shadow: none;
+}
+.custom-select{
+    background-color:  rgba(145, 185, 255, 0.2);
+    color: white;
+    border-radius: 50px;
+    border: none;
+    margin: 0px;
+    
+}
+.custom-select:focus{
+    background-color:  #333B50;
+    color: white;
+    border-radius: 50px;
+    border: none;
+    box-shadow: none;
+}

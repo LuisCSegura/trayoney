@@ -77,7 +77,7 @@
     </head>
     <body>
         <div class="logo-container">
-            <h1>Welcome to TRAYONEY.com</h1>
+            <h1>Welcome to TRAYONEY</h1>
             <h3>Manage your money, your income, expenses and accounts</h3>
             <h2>Manage your goals TRACK YOUR MONEY!</h2>
 

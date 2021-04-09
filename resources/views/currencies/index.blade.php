@@ -174,7 +174,7 @@
                       <form method="POST" action="/currencies/{{$currency->id}}">
                         @csrf
                         @method('PUT')
-                        <input id="base_currency_user_id" type="hidden" name="base_currency_user_id" value="null">
+                        <input id="base_currency_user_id" type="hidden" name="base_currency_user_id" value="">
                         <div class="form-group row m-2">
                           <label for="simbol" class="col-md-4 col-form-label text-md-right">Simbol</label>
   
@@ -278,7 +278,7 @@
                     <h1 class="form-title">NEW CURRENCY</h1>
                     <form method="POST" action="/currencies">
                       @csrf
-                      <input id="base_currency_user_id" type="hidden" name="base_currency_user_id" value="null">
+                      <input id="base_currency_user_id" type="hidden" name="base_currency_user_id" value="">
                       <div class="form-group row m-2">
                         <label for="simbol" class="col-md-4 col-form-label text-md-right">Simbol</label>
 

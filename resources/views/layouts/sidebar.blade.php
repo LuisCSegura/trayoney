@@ -6,7 +6,7 @@
 @section('content')
 <div class="nav-content">
   <div class="sidebar-container">
-    <div class="sidebar-logo">
+    <div class="sidebar-logo" style="margin-top: 40px">
       Track Your Money
     </div>
     <ul class="sidebar-navigation">

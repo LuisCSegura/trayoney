@@ -14,7 +14,7 @@ class Transaction extends Model
         'account_id',
         'category_id',
         'destination_account_id',
-        'detal',
+        'detail',
         'amount',
         'type'
     ];
