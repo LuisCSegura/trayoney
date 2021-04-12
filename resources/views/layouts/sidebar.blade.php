@@ -1,6 +1,9 @@
 @extends('layouts.app')
+@section('scripts')
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.min.js"></script>
+@endsection
 @section('styles')
-<link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
 @yield('stylesfluid')
 @endsection
 @section('content')
@@ -52,5 +55,7 @@
   </div>
   @yield('fluid')
 </div>
-
+@endsection
+@section('chart')
+  @yield('chartfluid')
 @endsection

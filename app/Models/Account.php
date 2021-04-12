@@ -21,4 +21,8 @@ class Account extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+    public function saherd_with_users()
+    {
+        return $this->belongsToMany(User::class, 'accounts_users', 'account_id', 'user_id');
+    }
 }

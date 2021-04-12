@@ -4,7 +4,11 @@
 @endsection
 @section('fluid')
   <div class="content-container">
-  
+    @if($error!=null)
+    <div class="error-container">
+        <p class="error-message">✖ ERROR: {{$error}}</p>
+    </div>
+    @endif 
     <div class="container-fluid">
   
      <h1>CURRENCIES</h1>

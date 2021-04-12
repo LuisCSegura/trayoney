@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,8 +27,12 @@ class AccountsController extends Controller
      */
     public function index()
     {
+        return $this->toIndex(null);
+    }
+    private function toIndex($message)
+    {
         $accounts = Account::where('user_id', Auth::user()->id)->latest()->get();
-        return view('accounts.index', ['accounts' => $accounts]);
+        return view('accounts.index', ['accounts' => $accounts, 'error' => $message]);
     }
 
     /**
@@ -37,12 +43,17 @@ class AccountsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateAccount();
-        $account = new Account(request(['currency_id', 'abbreviation', 'name', 'balance', 'is_debit']));
-        $account->user_id = Auth::user()->id;
-        $account->save();
-        return redirect('/accounts');
+        try {
+            $this->validateAccount();
+            $account = new Account(request(['currency_id', 'abbreviation', 'name', 'balance', 'is_debit']));
+            $account->user_id = Auth::user()->id;
+            $account->save();
+            return redirect('/accounts');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -53,8 +64,12 @@ class AccountsController extends Controller
      */
     public function update(Request $request, Account $account)
     {
-        $account->update($this->validateAccount());
-        return redirect('/accounts');
+        try {
+            $account->update($this->validateAccount());
+            return redirect('/accounts');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
 
     /**
@@ -65,9 +80,13 @@ class AccountsController extends Controller
      */
     public function destroy($id)
     {
-        $account = Account::findOrFail($id);
-        $account->delete();
-        return redirect('/accounts');
+        try {
+            $account = Account::findOrFail($id);
+            $account->delete();
+            return redirect('/accounts');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
     protected function validateAccount()
     {
@@ -78,5 +97,18 @@ class AccountsController extends Controller
             'is_debit' => 'required',
             'balance' => 'required'
         ]);
+    }
+    public function shareAccount(Account $account)
+    {
+        try {
+            $user = User::where('email', request()->email)->first();
+            if ($user == null) {
+                throw new Exception("The email provided does not match any registered user");
+            }
+            $user->shared_accounts()->attach($account);
+            return redirect('/accounts');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
 }

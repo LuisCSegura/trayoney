@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,9 +26,26 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        return $this->toIndex(null);
+    }
+    private function toIndex($message)
+    {
+        $mesactual = date("m");
+        $status = [];
+        $categories = Category::where(['user_id' => Auth::user()->id, 'category_id' => null])->get();
+        foreach ($categories as $category) {
+            $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])->whereMonth('updated_at', '=', $mesactual)->sum('amount');
+            $status[$category->id] = $used;
+            foreach ($category->categories as $son) {
+                $usedSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])->whereMonth('updated_at', '=', $mesactual)->sum('amount');
+                $status[$category->id] += $usedSon;
+                $status[$son->id] = $usedSon;
+            }
+        }
+        // dd($status);
         $incomes = Category::where(['user_id' => Auth::user()->id, 'is_income' => true])->latest()->get();
         $expenses = Category::where(['user_id' => Auth::user()->id, 'is_income' => false])->latest()->get();
-        return view('categories.index', ['incomes' => $incomes, 'expenses' => $expenses]);
+        return view('categories.index', ['incomes' => $incomes, 'expenses' => $expenses, 'status' => $status, 'error' => $message]);
     }
 
     /**
@@ -38,11 +56,15 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateCategory();
-        $category = new Category(request(['category_id', 'name', 'amount', 'is_income']));
-        $category->user_id = Auth::user()->id;
-        $category->save();
-        return redirect('/categories');
+        try {
+            $this->validateCategory();
+            $category = new Category(request(['category_id', 'name', 'amount', 'is_income']));
+            $category->user_id = Auth::user()->id;
+            $category->save();
+            return redirect('/categories');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
 
     /**
@@ -54,8 +76,12 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $category->update($this->validateCategory());
-        return redirect('/categories');
+        try {
+            $category->update($this->validateCategory());
+            return redirect('/categories');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
 
     /**
@@ -66,9 +92,13 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return redirect('/categories');
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
+            return redirect('/categories');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
     protected function validateCategory()
     {

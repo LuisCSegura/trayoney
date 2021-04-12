@@ -24,10 +24,13 @@ class CurrenciesController extends Controller
      */
     public function index()
     {
-        $currencies = Currency::where('user_id', Auth::user()->id)->latest()->get();
-        return view('currencies.index', ['currencies' => $currencies]);
+        return $this->toIndex(null);
     }
-
+    private function toIndex($message)
+    {
+        $currencies = Currency::where('user_id', Auth::user()->id)->latest()->get();
+        return view('currencies.index', ['currencies' => $currencies, 'error' => $message]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -37,11 +40,15 @@ class CurrenciesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateCurrency();
-        $currency = new Currency(request(['base_currency_user_id', 'abbreviation', 'name', 'simbol', 'rate']));
-        $currency->user_id = Auth::user()->id;
-        $currency->save();
-        return redirect('/currencies');
+        try {
+            $this->validateCurrency();
+            $currency = new Currency(request(['base_currency_user_id', 'abbreviation', 'name', 'simbol', 'rate']));
+            $currency->user_id = Auth::user()->id;
+            $currency->save();
+            return redirect('/currencies');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
 
     /**
@@ -53,8 +60,12 @@ class CurrenciesController extends Controller
      */
     public function update(Request $request, Currency $currency)
     {
-        $currency->update($this->validateCurrency());
-        return redirect('/currencies');
+        try {
+            $currency->update($this->validateCurrency());
+            return redirect('/currencies');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
 
     /**
@@ -65,9 +76,13 @@ class CurrenciesController extends Controller
      */
     public function destroy($id)
     {
-        $currency = Currency::findOrFail($id);
-        $currency->delete();
-        return redirect('/currencies');
+        try {
+            $currency = Currency::findOrFail($id);
+            $currency->delete();
+            return redirect('/currencies');
+        } catch (\Throwable $th) {
+            return $this->toIndex($th->getMessage());
+        }
     }
     protected function validateCurrency()
     {

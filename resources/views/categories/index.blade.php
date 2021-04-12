@@ -4,7 +4,11 @@
 @endsection
 @section('fluid')
   <div class="content-container">
-  
+    @if($error!=null)
+    <div class="error-container">
+        <p class="error-message">✖ ERROR: {{$error}}</p>
+    </div>
+    @endif 
     <div class="container-fluid">
   
      <h1>CATEGORIES</h1>
@@ -58,7 +62,7 @@
                 NAME
               </th>
               <th>
-                MONTHLY EXPECT
+                MONTHLY EXPECT ({{Auth::user()->base_currency->simbol}})
               </th>
               <th>
                 ACTIONS
@@ -71,8 +75,8 @@
                <td class="item-cell first">
                 {{$income->name}}
                </td>
-               <td class="item-cell">
-                {{$income->amount}}
+               <td class="item-cell @if($income->amount<=$status[$income->id]) accomplished @endif">
+                {{$income->amount}} @if($income->amount<= $status[$income->id]) (ACCOMPLISHED) @endif
                </td>
                <td class="item-cell last">
                 <button data-toggle="modal" data-target="#add{{$income->id}}" class="btn-main add">✚</button>
@@ -177,9 +181,9 @@
                     <td class="item-cell first">
                         {{$son->name}}
                     </td>
-                    <td class="item-cell">
-                        {{$son->amount}}
-                    </td>
+                    <td class="item-cell @if($son->amount<=$status[$son->id]) accomplished @endif">
+                      {{$son->amount}} @if($son->amount<= $status[$son->id]) (ACCOMPLISHED) @endif
+                     </td>
                     <td class="item-cell last">
                         <button data-toggle="modal" data-target="#upd{{$son->id}}" class="btn-main update">✎</button>
                         {{--SON UPDATE FORM--}}
@@ -284,7 +288,7 @@
                     NAME
                   </th>
                   <th>
-                    MONTHLY BUDGET
+                    MONTHLY BUDGET ({{Auth::user()->base_currency->simbol}})
                   </th>
                   <th>
                     ACTIONS
@@ -297,8 +301,8 @@
                    <td class="item-cell first">
                     {{$expense->name}}
                    </td>
-                   <td class="item-cell">
-                    {{$expense->amount}}
+                   <td class="item-cell @if($expense->amount<$status[$expense->id]) surpassed @endif">
+                    {{$expense->amount}} @if($expense->amount< $status[$expense->id]) (SURPASSED) @endif
                    </td>
                    <td class="item-cell last">
                     <button data-toggle="modal" data-target="#add{{$expense->id}}" class="btn-main add">✚</button>
@@ -403,8 +407,8 @@
                         <td class="item-cell first">
                             {{$son->name}}
                         </td>
-                        <td class="item-cell">
-                            {{$son->amount}}
+                        <td class="item-cell @if($son->amount<$status[$son->id]) surpassed @endif">
+                          {{$son->amount}} @if($son->amount< $status[$son->id]) (SURPASSED) @endif
                         </td>
                         <td class="item-cell last">
                             <button data-toggle="modal" data-target="#upd{{$son->id}}" class="btn-main update">✎</button>

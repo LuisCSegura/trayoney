@@ -4,7 +4,11 @@
 @endsection
 @section('fluid')
   <div class="content-container">
-  
+    @if($error!=null)
+    <div class="error-container">
+        <p class="error-message">✖ ERROR: {{$error}}</p>
+    </div>
+    @endif 
     <div class="container-fluid">
   
      <h1>ACCOUNTS</h1>
@@ -47,7 +51,7 @@
             <td class="item-cell">
                 {{$account->name}}
             </td>
-            <td class="item-cell">
+            <td class="item-cell" @if($account->balance < 0) style="color: crimson;" @endif>
                 {{$account->balance}}
             </td>
             <td class="item-cell">
@@ -61,6 +65,7 @@
                 @endif
             </td>
             <td class="item-cell last">
+              
              <button data-toggle="modal" data-target="#upd{{$account->id}}" class="btn-main update">✎</button>
              {{-- UPDATE FORM --}}
           <div class="modal fade" id="upd{{$account->id}}">
@@ -174,6 +179,32 @@
             </div>
         </div>
           {{-- DELETE FORM --}}
+          <button data-toggle="modal" data-target="#share{{$account->id}}" class="btn-main share">✉</button>
+             {{-- SHARE FORM --}}
+          <div class="modal fade" id="share{{$account->id}}">
+            <div class="modal-dialog">
+                <div class="modal-content card">
+                    <div class="modal-header" style="border:none;">
+                        <button type="button" class="close" data-dismiss="modal" style="color: white;">✖
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                      <h1 class="form-title">SHARE {{$account->abbreviation}}</h1>
+                      <form method="POST" action="/accounts/{{$account->id}}" style="display: inline;">
+                        @csrf
+                        <div class="form-group row m-1">
+                          <label for="email" class="col-md-4 col-form-label text-md-right">User email</label>
+                          <div class="col-md-8 m-0 p-0">
+                              <input id="email" type="text" class="form-control input-trn" name="email" value="{{ old('email')}}" required>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn-main exe">SHARE</button>
+                       </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+          {{-- SHARE FORM --}}
             </td>
           </tr>
           @endforeach
@@ -263,9 +294,66 @@
       </div>
       {{-- create --}}
     </div>
-    
+
+    <div class="content-section">
+      <div class="content-section-header">
+        <h2>Accounts Shared With You</h2>
+     </div>
+    <hr>
+    @if(Auth::user()->shared_accounts->count() > 0)
+        <table class="index-table">
+          <tr>
+            <th>
+              OWNER
+            </th>
+            <th>
+             ABBREVIATION
+           </th>
+           <th>
+             NAME
+           </th>
+           <th>
+             BALANCE
+           </th>
+           <th>
+            CURRENCY
+          </th>
+          <th>
+            TYPE
+          </th>
+          </tr>
+          @foreach (Auth::user()->shared_accounts as $account)
+          <tr class="spacer"><td></td></tr>
+          <tr class="item-row">
+            <td class="item-cell first">
+              {{$account->user->name}} ({{$account->user->email}})
+             </td>
+            <td class="item-cell">
+             {{$account->abbreviation}}
+            </td>
+            <td class="item-cell">
+                {{$account->name}}
+            </td>
+            <td class="item-cell" @if($account->balance < 0) style="color: crimson;" @endif>
+                {{$account->balance}}
+            </td>
+            <td class="item-cell">
+                {{$account->currency->abbreviation}}
+            </td>
+            <td class="item-cell last">
+                @if($account->is_debit)
+                    Debit
+                @else
+                    Credit
+                @endif
+            </td>
+        @endforeach
+        </table>
+      @else
+        <h3>Accounts shared with you will appear here</h3>
+      @endif
+    </div>
      
-  
     </div>
   </div>
 @endsection

@@ -34,6 +34,7 @@ Route::get('/accounts', [App\Http\Controllers\AccountsController::class, 'index'
 Route::post('/accounts', [App\Http\Controllers\AccountsController::class, 'store']);
 Route::put('/accounts/{account}', [App\Http\Controllers\AccountsController::class, 'update']);
 Route::delete('/accounts/{account}', [App\Http\Controllers\AccountsController::class, 'destroy']);
+Route::post('/accounts/{account}', [App\Http\Controllers\AccountsController::class, 'shareAccount']);
 //categories
 Route::get('/categories', [App\Http\Controllers\CategoriesController::class, 'index']);
 Route::post('/categories', [App\Http\Controllers\CategoriesController::class, 'store']);
@@ -41,3 +42,6 @@ Route::put('/categories/{category}', [App\Http\Controllers\CategoriesController:
 Route::delete('/categories/{category}', [App\Http\Controllers\CategoriesController::class, 'destroy']);
 //transactions
 Route::get('/transactions', [App\Http\Controllers\TransactionsController::class, 'index']);
+Route::post('/transactions', [App\Http\Controllers\TransactionsController::class, 'store']);
+Route::put('/transactions/{transaction}', [App\Http\Controllers\TransactionsController::class, 'update']);
+Route::delete('/transactions/{transaction}', [App\Http\Controllers\TransactionsController::class, 'destroy']);
