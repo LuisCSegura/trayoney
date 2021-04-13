@@ -64,7 +64,7 @@
                     Credit
                 @endif
             </td>
-            <td class="item-cell last">
+            <td class="item-cell">
               
              <button data-toggle="modal" data-target="#upd{{$account->id}}" class="btn-main update">✎</button>
              {{-- UPDATE FORM --}}
@@ -205,6 +205,12 @@
             </div>
         </div>
           {{-- SHARE FORM --}}
+            </td>
+            <td class="item-cell last" style="padding: 0px;">
+              <form method="GET" class="absolute-filled" action="/accountshow/{{$account->id}}">
+                @csrf
+                 <button type="submit" class="btn-main absolute-filled">▶</button>
+              </form>
             </td>
           </tr>
           @endforeach

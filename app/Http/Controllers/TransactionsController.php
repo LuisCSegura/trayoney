@@ -48,6 +48,12 @@ class TransactionsController extends Controller
         // dd($transactions);
         return view('transactions.index', ['transactions' => $transactions, 'title' => $category->name . ' Transactions', 'create' => false, 'error' => null]);
     }
+    public function accountShow(Account $account)
+    {
+        $transactions = Transaction::where('account_id', $account->id)->orWhere('destination_account_id', $account->id)->get();
+        // dd($transactions);
+        return view('transactions.index', ['transactions' => $transactions, 'title' => $account->abbreviation . ' Transactions', 'create' => false, 'error' => null]);
+    }
 
     /**
      * Store a newly created resource in storage.
