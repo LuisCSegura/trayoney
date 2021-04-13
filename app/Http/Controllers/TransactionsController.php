@@ -34,10 +34,7 @@ class TransactionsController extends Controller
     }
     private function toIndex($message)
     {
-        $month = date("m");
-        $year = date("Y");
-        $transactions = Transaction::where(['user_id' => Auth::user()->id])
-            ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->latest()->get();
+        $transactions = Transaction::where(['user_id' => Auth::user()->id])->latest()->get();
         // dd($transactions);
         return view('transactions.index', ['transactions' => $transactions, 'title' => 'Your Transactions', 'create' => true, 'error' => $message]);
     }

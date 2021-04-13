@@ -41,7 +41,7 @@
                           </div>
                         </div>
                         <div class="form-group row m-2">
-                          <label for="amount" class="col-md-4 col-form-label text-md-right">Expect ({{Auth::user()->base_currency->simbol}})</label>
+                          <label for="amount" class="col-md-4 col-form-label text-md-right">Expect @if(Auth::user()->base_currency) ({{Auth::user()->base_currency->simbol}}) @endif</label>
                           <div class="col-md-8 m-0 p-0">
                               <input id="amount" type="number" placeholder="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" class="form-control input-trn" name="amount" value="{{ old('amount') }}" required>
                           </div>
@@ -267,7 +267,7 @@
                               </div>
                             </div>
                             <div class="form-group row m-2">
-                              <label for="amount" class="col-md-4 col-form-label text-md-right">Budget ({{Auth::user()->base_currency->simbol}})</label>
+                              <label for="amount" class="col-md-4 col-form-label text-md-right">Budget @if(Auth::user()->base_currency) ({{Auth::user()->base_currency->simbol}}) @endif</label>
                               <div class="col-md-8 m-0 p-0">
                                   <input id="amount" type="number" placeholder="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" class="form-control input-trn" name="amount" value="{{ old('amount') }}" required>
                               </div>

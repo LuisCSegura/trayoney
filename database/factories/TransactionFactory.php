@@ -32,6 +32,7 @@ class TransactionFactory extends Factory
             'detail' => $this->faker->sentence,
             'amount' => $this->faker->randomFloat(NULL, $min = 1, $max = 10000000),
             'type' => $this->faker->randomElement(['INCOME', 'EXPENSE', 'TRANSFER']),
+            'updated_at' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
         ];
     }
 }
