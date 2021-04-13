@@ -45,3 +45,5 @@ Route::get('/transactions', [App\Http\Controllers\TransactionsController::class,
 Route::post('/transactions', [App\Http\Controllers\TransactionsController::class, 'store']);
 Route::put('/transactions/{transaction}', [App\Http\Controllers\TransactionsController::class, 'update']);
 Route::delete('/transactions/{transaction}', [App\Http\Controllers\TransactionsController::class, 'destroy']);
+//stats
+Route::get('/stats/{opt}', [App\Http\Controllers\HomeController::class, 'show']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Currency;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,6 +45,12 @@ class CurrenciesController extends Controller
             $this->validateCurrency();
             $currency = new Currency(request(['base_currency_user_id', 'abbreviation', 'name', 'simbol', 'rate']));
             $currency->user_id = Auth::user()->id;
+            if (Auth::user()->currencies->count() == 0 && Auth::user()->categories->count() == 0) {
+                Category::factory()->state(['user_id' => Auth::user()->id, 'name' => 'Wages', 'is_income' => true])->create();
+                Category::factory()->state(['user_id' => Auth::user()->id, 'name' => 'Projects', 'is_income' => true])->create();
+                Category::factory()->state(['user_id' => Auth::user()->id, 'name' => 'Home', 'is_income' => false])->create();
+                Category::factory()->state(['user_id' => Auth::user()->id, 'name' => 'Car', 'is_income' => false])->create();
+            }
             $currency->save();
             return redirect('/currencies');
         } catch (\Throwable $th) {

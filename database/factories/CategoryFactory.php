@@ -27,7 +27,7 @@ class CategoryFactory extends Factory
             'user_id' => User::factory(),
             'category_id' => NULL,
             'name' => $this->faker->word,
-            'amount' => $this->faker->randomFloat(NULL, $min = 1, $max = 10000000),
+            'amount' => $this->faker->randomFloat(2, $min = 1, $max = 10000000),
             'is_income' => $this->faker->randomElement([true, false]),
         ];
     }
