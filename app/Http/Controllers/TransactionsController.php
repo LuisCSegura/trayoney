@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Currency;
 use Exception;
 use GuzzleHttp\Psr7\Message;
@@ -37,7 +38,15 @@ class TransactionsController extends Controller
         $year = date("Y");
         $transactions = Transaction::where(['user_id' => Auth::user()->id])
             ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->latest()->get();
-        return view('transactions.index', ['transactions' => $transactions, 'error' => $message]);
+        // dd($transactions);
+        return view('transactions.index', ['transactions' => $transactions, 'title' => 'Your Transactions', 'create' => true, 'error' => $message]);
+    }
+    public function showStat(Request $request, Category $category)
+    {
+        $array = json_decode($request->transactions);
+        $transactions = Transaction::hydrate($array);
+        // dd($transactions);
+        return view('transactions.index', ['transactions' => $transactions, 'title' => $category->name . ' Transactions', 'create' => false, 'error' => null]);
     }
 
     /**

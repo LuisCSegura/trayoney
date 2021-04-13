@@ -14,7 +14,8 @@
      <h1>TRANSACTIONS</h1>
         <div class="content-section">
             <div class="content-section-header">
-                <h2>Your Transactions</h2>
+                <h2>{{$title}}</h2>
+                @if($create)
                 <button class="btn-main create" data-toggle="modal" data-target="#create-income">✚ NEW INCOME</button>
                 {{-- CREATE INCOM FORM--}}
                 <div class="modal fade" id="create-income">
@@ -232,6 +233,7 @@
                     </div>
                 </div>
                 {{-- CREATE TRANSFER FORM --}}
+                @endif
             </div>
             <hr>
         @if($transactions->count()>0)

@@ -47,3 +47,4 @@ Route::put('/transactions/{transaction}', [App\Http\Controllers\TransactionsCont
 Route::delete('/transactions/{transaction}', [App\Http\Controllers\TransactionsController::class, 'destroy']);
 //stats
 Route::get('/stats/{opt}', [App\Http\Controllers\HomeController::class, 'show']);
+Route::get('/showstats/{category}', [App\Http\Controllers\TransactionsController::class, 'showStat']);

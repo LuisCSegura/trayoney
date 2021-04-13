@@ -112,13 +112,18 @@ class HomeController extends Controller
         foreach ($categories as $category) {
             $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
                 ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount');
+            $trns = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
+                ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->get();
             $sons = [];
             $blueSon = [30, 144, 255];
             $redSon = [225, 20, 60];
             foreach ($category->categories as $son) {
                 $usedSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
                     ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount');
+                $trnsSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
+                    ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->get();
                 $used += $usedSon;
+                $trns = $trns->merge($trnsSon);
                 if ($son->is_income) {
                     array_push($sons, [$son->name, $usedSon, $blueSon]);
                     $blueSon[0] += 30;
@@ -130,11 +135,11 @@ class HomeController extends Controller
                 }
             }
             if ($category->is_income) {
-                array_push($stats, [$category->name, $used, $blue, $category->id, true, $sons]);
+                array_push($stats, [$category->name, $used, $blue, $category->id, true, $sons, $trns]);
                 $blue[0] += 20;
                 $blue[1] += 10;
             } else {
-                array_push($stats, [$category->name, $used, $red, $category->id, false, $sons]);
+                array_push($stats, [$category->name, $used, $red, $category->id, false, $sons, $trns]);
                 $red[0] += 3;
                 $red[1] += 20;
                 $red[2] += 15;
@@ -150,13 +155,20 @@ class HomeController extends Controller
         $stats = [];
         $categories = Category::where(['user_id' => Auth::user()->id, 'category_id' => null])->orderBy('is_income')->get();
         foreach ($categories as $category) {
-            $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])->whereYear('updated_at', '=', $year)->sum('amount');
+            $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
+                ->whereYear('updated_at', '=', $year)->sum('amount');
+            $trns = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
+                ->whereYear('updated_at', '=', $year)->get();
             $sons = [];
             $blueSon = [30, 144, 255];
             $redSon = [225, 20, 60];
             foreach ($category->categories as $son) {
-                $usedSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])->whereYear('updated_at', '=', $year)->sum('amount');
+                $usedSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
+                    ->whereYear('updated_at', '=', $year)->sum('amount');
+                $trnsSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
+                    ->whereYear('updated_at', '=', $year)->get();
                 $used += $usedSon;
+                $trns = $trns->merge($trnsSon);
                 if ($son->is_income) {
                     array_push($sons, [$son->name, $usedSon, $blueSon]);
                     $blueSon[0] += 30;
@@ -168,11 +180,11 @@ class HomeController extends Controller
                 }
             }
             if ($category->is_income) {
-                array_push($stats, [$category->name, $used, $blue, $category->id, true, $sons]);
+                array_push($stats, [$category->name, $used, $blue, $category->id, true, $sons, $trns]);
                 $blue[0] += 20;
                 $blue[1] += 10;
             } else {
-                array_push($stats, [$category->name, $used, $red, $category->id, false, $sons]);
+                array_push($stats, [$category->name, $used, $red, $category->id, false, $sons, $trns]);
                 $red[0] += 3;
                 $red[1] += 20;
                 $red[2] += 15;
@@ -188,13 +200,20 @@ class HomeController extends Controller
         $stats = [];
         $categories = Category::where(['user_id' => Auth::user()->id, 'category_id' => null])->orderBy('is_income')->get();
         foreach ($categories as $category) {
-            $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])->whereBetween('updated_at', [$date1, $date2])->sum('amount');
+            $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
+                ->whereBetween('updated_at', [$date1, $date2])->sum('amount');
+            $trns = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
+                ->whereBetween('updated_at', [$date1, $date2])->get();
             $sons = [];
             $blueSon = [30, 144, 255];
             $redSon = [225, 20, 60];
             foreach ($category->categories as $son) {
-                $usedSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])->whereBetween('updated_at', [$date1, $date2])->sum('amount');
+                $usedSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
+                    ->whereBetween('updated_at', [$date1, $date2])->sum('amount');
+                $trnsSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
+                    ->whereBetween('updated_at', [$date1, $date2])->get();
                 $used += $usedSon;
+                $trns = $trns->merge($trnsSon);
                 if ($son->is_income) {
                     array_push($sons, [$son->name, $usedSon, $blueSon]);
                     $blueSon[0] += 30;
@@ -206,11 +225,11 @@ class HomeController extends Controller
                 }
             }
             if ($category->is_income) {
-                array_push($stats, [$category->name, $used, $blue, $category->id, true, $sons]);
+                array_push($stats, [$category->name, $used, $blue, $category->id, true, $sons, $trns]);
                 $blue[0] += 20;
                 $blue[1] += 10;
             } else {
-                array_push($stats, [$category->name, $used, $red, $category->id, false, $sons]);
+                array_push($stats, [$category->name, $used, $red, $category->id, false, $sons, $trns]);
                 $red[0] += 3;
                 $red[1] += 20;
                 $red[2] += 15;

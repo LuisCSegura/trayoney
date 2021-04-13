@@ -107,9 +107,16 @@
         <div class="chart-container content-section" style="width: 32%;">
           @foreach($stats as $stat)
             @if($stat[4])
-            <p class="header-info" style="background-color:#1E90FF;">
+            <div class="header-info" style="background-color:#1E90FF;">
                 {{$stat[0]}}: @if(Auth::user()->base_currency) {{Auth::user()->base_currency->simbol}}@endif{{$stat[1]}}
-            </p>
+                @if(count($stat[6])>0)
+                <form method="GET" action="/showstats/{{$stat[3]}}" style="display: inline;">
+                  @csrf
+                    <input id="transactions" name="transactions" type="hidden" value="{{$stat[6]}}"/>
+                    <button type="submit" class="btn-main small blue">TRANSACTIONS</button>
+                </form>
+                @endif
+              </div>
               @if(count($stat[5])>0)
               <div style="height: 200px; display:flex; justify-content:center;">
                 <div style="width: 200px;">
@@ -137,9 +144,16 @@
         <div class="chart-container content-section" style="width: 32%;">
           @foreach($stats as $stat)
             @if(!$stat[4])
-            <p class="header-info" style="background-color:#DC143C;">
-                {{$stat[0]}}: @if(Auth::user()->base_currency) {{Auth::user()->base_currency->simbol}}@endif{{$stat[1]}}
-            </p>
+            <div class="header-info" style="background-color:#dc143c;">
+              {{$stat[0]}}: @if(Auth::user()->base_currency) {{Auth::user()->base_currency->simbol}}@endif{{$stat[1]}}
+              @if(count($stat[6])>0)
+              <form method="GET" action="/showstats/{{$stat[3]}}" style="display: inline;">
+                @csrf
+                  <input id="transactions" name="transactions" type="hidden" value="{{$stat[6]}}"/>
+                  <button type="submit" class="btn-main small red">TRANSACTIONS</button>
+              </form>
+              @endif
+            </div>
               @if(count($stat[5])>0)
               <div style="height: 200px; display:flex; justify-content:center;">
                 <div style="width: 200px;">
@@ -150,6 +164,7 @@
               @else
                 <p style="text-align: center;">This category do not have sub-categories</p>
               @endif
+
             @endif
           @endforeach
         </div>

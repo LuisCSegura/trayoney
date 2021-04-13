@@ -187,3 +187,22 @@ hr{
     border-radius: 10px;
     text-align: center;
 }
+.small{
+    height: auto;
+    font-size: 12px;
+    padding: 3px 5px 0px 5px;
+    margin: 3px;
+    display: inline;
+}
+.blue{
+    background-color: #0060cF;
+}
+.blue:hover{
+    background-color: #0050bF;
+}
+.red{
+    background-color: #8C0000;
+}
+.red:hover{
+    background-color: #7C0000;
+}
