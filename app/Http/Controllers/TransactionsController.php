@@ -47,7 +47,7 @@ class TransactionsController extends Controller
     }
     public function accountShow(Account $account)
     {
-        $transactions = Transaction::where('account_id', $account->id)->orWhere('destination_account_id', $account->id)->get();
+        $transactions = Transaction::where('account_id', $account->id)->orWhere('destination_account_id', $account->id)->latest()->get();
         // dd($transactions);
         return view('transactions.index', ['transactions' => $transactions, 'title' => $account->abbreviation . ' Transactions', 'create' => false, 'error' => null]);
     }
