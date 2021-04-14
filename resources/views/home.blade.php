@@ -20,7 +20,7 @@
                   </div>
                   <div class="modal-body">
                   <h1 class="form-title">CONSULT BETWEEN DATES</h1>
-                  <form method="GET" action="/stats/0">
+                  <form method="GET" action="/charStats/0">
                     @csrf
                     <div class="form-group row m-2">
                       <label for="date1" class="col-md-4 col-form-label text-md-right">Since</label>
@@ -41,11 +41,11 @@
           </div>
       </div>
       {{-- 0 --}}
-        <form method="GET" action="/stats/1" style="margin: 10px;">
+        <form method="GET" action="/charStats/1" style="margin: 10px;">
           @csrf
           <button type="submit" class="btn-main">LAST MONTH</button>
         </form>
-        <form method="GET" action="/stats/2" style="margin: 10px;">
+        <form method="GET" action="/charStats/2" style="margin: 10px;">
           @csrf
           <button type="submit" class="btn-main">LAST YEAR</button>
         </form>
@@ -60,7 +60,7 @@
                   </div>
                   <div class="modal-body">
                   <h1 class="form-title">CONSULT BY MONTH</h1>
-                  <form method="GET" action="/stats/3">
+                  <form method="GET" action="/charStats/3">
                     @csrf
                     <div class="form-group row m-2">
                       <label for="month" class="col-md-4 col-form-label text-md-right">Month</label>
@@ -86,7 +86,7 @@
                   </div>
                   <div class="modal-body">
                   <h1 class="form-title">CONSULT BY YEAR</h1>
-                  <form method="GET" action="/stats/4">
+                  <form method="GET" action="/charStats/4">
                     @csrf
                     <div class="form-group row m-2">
                       <label for="year" class="col-md-4 col-form-label text-md-right">Year</label>
