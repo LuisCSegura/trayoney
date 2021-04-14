@@ -78,26 +78,30 @@ class HomeController extends Controller
     protected function loadIeMonth($month, $year)
     {
         $ie = [];
-        $incomeAmount = Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'INCOME']])
-            ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount');
-        $expenseAmount = Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'EXPENSE']])
-            ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount');
+        $incomeAmount = round(Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'INCOME']])
+            ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount'), 2);
+        $expenseAmount = round(Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'EXPENSE']])
+            ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount'), 2);
         array_push($ie, $incomeAmount, $expenseAmount);
         return $ie;
     }
     protected function loadIeYear($year)
     {
         $ie = [];
-        $incomeAmount = Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'INCOME']])->whereYear('updated_at', '=', $year)->sum('amount');
-        $expenseAmount = Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'EXPENSE']])->whereYear('updated_at', '=', $year)->sum('amount');
+        $incomeAmount = round(Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'INCOME']])
+            ->whereYear('updated_at', '=', $year)->sum('amount'), 2);
+        $expenseAmount = round(Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'EXPENSE']])
+            ->whereYear('updated_at', '=', $year)->sum('amount'), 2);
         array_push($ie, $incomeAmount, $expenseAmount);
         return $ie;
     }
     protected function loadIeBetween($date1, $date2)
     {
         $ie = [];
-        $incomeAmount = Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'INCOME']])->whereBetween('updated_at', [$date1, $date2])->sum('amount');
-        $expenseAmount = Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'EXPENSE']])->whereBetween('updated_at', [$date1, $date2])->sum('amount');
+        $incomeAmount = round(Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'INCOME']])
+            ->whereBetween('updated_at', [$date1, $date2])->sum('amount'), 2);
+        $expenseAmount = round(Transaction::where([['user_id', '=', Auth::user()->id], ['type', '=', 'EXPENSE']])
+            ->whereBetween('updated_at', [$date1, $date2])->sum('amount'), 2);
         array_push($ie, $incomeAmount, $expenseAmount);
         return $ie;
     }
@@ -110,16 +114,16 @@ class HomeController extends Controller
         $stats = [];
         $categories = Category::where(['user_id' => Auth::user()->id, 'category_id' => null])->orderBy('is_income')->get();
         foreach ($categories as $category) {
-            $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
-                ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount');
+            $used = round(Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
+                ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount'), 2);
             $trns = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
                 ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->get();
             $sons = [];
             $blueSon = [30, 144, 255];
             $redSon = [225, 20, 60];
             foreach ($category->categories as $son) {
-                $usedSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
-                    ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount');
+                $usedSon = round(Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
+                    ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->sum('amount'), 2);
                 $trnsSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
                     ->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->get();
                 $used += $usedSon;
@@ -155,16 +159,16 @@ class HomeController extends Controller
         $stats = [];
         $categories = Category::where(['user_id' => Auth::user()->id, 'category_id' => null])->orderBy('is_income')->get();
         foreach ($categories as $category) {
-            $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
-                ->whereYear('updated_at', '=', $year)->sum('amount');
+            $used = round(Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
+                ->whereYear('updated_at', '=', $year)->sum('amount'), 2);
             $trns = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
                 ->whereYear('updated_at', '=', $year)->get();
             $sons = [];
             $blueSon = [30, 144, 255];
             $redSon = [225, 20, 60];
             foreach ($category->categories as $son) {
-                $usedSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
-                    ->whereYear('updated_at', '=', $year)->sum('amount');
+                $usedSon = round(Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
+                    ->whereYear('updated_at', '=', $year)->sum('amount'), 2);
                 $trnsSon = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $son->id]])
                     ->whereYear('updated_at', '=', $year)->get();
                 $used += $usedSon;
@@ -194,14 +198,13 @@ class HomeController extends Controller
     }
     protected function loadStatsBetween($date1, $date2)
     {
-        $mesactual = date("m");
         $blue = [30, 144, 255];
         $red = [220, 20, 60];
         $stats = [];
         $categories = Category::where(['user_id' => Auth::user()->id, 'category_id' => null])->orderBy('is_income')->get();
         foreach ($categories as $category) {
-            $used = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
-                ->whereBetween('updated_at', [$date1, $date2])->sum('amount');
+            $used = round(Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
+                ->whereBetween('updated_at', [$date1, $date2])->sum('amount'), 2);
             $trns = Transaction::where([['user_id', '=', Auth::user()->id], ['category_id', '=', $category->id]])
                 ->whereBetween('updated_at', [$date1, $date2])->get();
             $sons = [];
