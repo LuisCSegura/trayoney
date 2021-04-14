@@ -48,14 +48,14 @@ class HomeController extends Controller
             $ie = $this->loadIeBetween($d1, $d2);
             $title = "STATS BETWEEN " . $d1 . " AND " . $d2;
         } elseif ($opt == 1) {
-            $d2 = date('Y-m-d H:i:s');
+            $d2 = date('Y-m-d');
             $d1 = date("d-m-Y", strtotime($d2 . "- 1 month"));
             $stats = $this->loadStatsBetween($d1, $d2);
             $ie = $this->loadIeBetween($d1, $d2);
             $title = "STATS OF THE LAST MONTH";
         } elseif ($opt == 2) {
-            $d2 = date('Y-m-d H:i:s');
-            $d1 = date('Y-m-d H:i:s', strtotime($d2 . "- 1 year"));
+            $d2 = date('Y-m-d');
+            $d1 = date('Y-m-d', strtotime($d2 . "- 1 year"));
             $stats = $this->loadStatsBetween($d1, $d2);
             $ie = $this->loadIeBetween($d1, $d2);
             $title = "STATS OF THE LAST YEAR";
