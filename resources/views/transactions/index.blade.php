@@ -205,7 +205,7 @@
                                         <select name="destination_account_id" id="destination_account_id" class="custom-select" required>
                                             @foreach(Auth::user()->accounts as $account)
                                                     <option value="{{$account->id}}">
-                                                        {{$account->name}}
+                                                        {{$account->name}} ({{$account->balance}})
                                                     </option>
                                             @endforeach
                                         </select>
